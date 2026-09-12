@@ -6,7 +6,10 @@ Submission for [Beat Claude](https://github.com/ericosiu/beat-claude) challenge
 Reads `fixtures/inbound_leads.csv` and emits a decision for every row: QUALIFY,
 NURTURE, REJECT or ESCALATE, each with a one-sentence reason and a confidence.
 
-The write-up is in [SUBMISSION.md](SUBMISSION.md).
+Two write-ups, same build:
+
+- [SUBMISSION-011.md](SUBMISSION-011.md) for **Intern 011**, Option B (lead qualification)
+- [SUBMISSION.md](SUBMISSION.md) for **AI Automation Intern 012**, which goes deeper on the seeded traps
 
 ## Run it
 
