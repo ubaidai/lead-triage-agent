@@ -4,7 +4,7 @@
 **Fixture:** `fixtures/inbound_leads.csv`
 **Fixture sha256:** `cc1927ca771c37b186a2abdb7b9757594da79ec6dda074e5a514dd2761cc8599`
 **Rows processed:** 20 of 20 [Observed]
-**Repo:** *(add your GitHub URL here)*
+**Repo:** https://github.com/ubaidai/lead-triage-agent
 
 ## Written answer
 
