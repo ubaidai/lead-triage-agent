@@ -1,0 +1,13 @@
+{
+  "name": "lead-triage-agent",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/run.mjs",
+    "offline": "node src/run.mjs --offline",
+    "test": "node tests/check.mjs",
+    "compare": "node scripts/compare.mjs"
+  },
+  "engines": { "node": ">=22" }
+}

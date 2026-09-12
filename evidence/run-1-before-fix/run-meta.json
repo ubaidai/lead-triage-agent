@@ -1,0 +1,13 @@
+{
+  "fixture_sha256": "cc1927ca771c37b186a2abdb7b9757594da79ec6dda074e5a514dd2761cc8599",
+  "brief_version": "2026-07",
+  "rows": 20,
+  "model": "anthropic/claude-haiku-4.5",
+  "ran_at": "2026-09-12T22:32:13.193Z",
+  "counts": {
+    "QUALIFY": 5,
+    "REJECT": 2,
+    "ESCALATE": 10,
+    "NURTURE": 3
+  }
+}

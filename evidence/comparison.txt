@@ -1,0 +1,20 @@
+rows compared      20
+agreed             18
+disagreed          2
+agreement rate     90%
+
+agent escalated where the manual pass decided   2  (costs review time)
+agent decided where the manual pass escalated   0  (costs a customer)
+
+--- disagreements ---
+
+L-011   manual REJECT  ->  agent ESCALATE
+  manual: Agency asking how we structure retainers, for a client of theirs. Competitive research, not a buyer.
+  agent:  Lead claims to be an agency seeking retainer structure information for a client comparison, which could indicate they are a reseller, referral partner, or competitor rather than a direct prospect, requiring human verification of their actual business model and intent.
+
+L-013   manual REJECT  ->  agent ESCALATE
+  manual: Disposable inbox and a demand for the full methodology and client results before any conversation.
+  agent:  Cannot act on this row: mailinator.com is a throwaway domain.
+
+manual distribution {"QUALIFY":5,"REJECT":4,"ESCALATE":9,"NURTURE":2}
+agent  distribution {"QUALIFY":5,"REJECT":2,"ESCALATE":11,"NURTURE":2}

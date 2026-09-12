@@ -1,0 +1,122 @@
+[
+  {
+    "lead_id": "L-001",
+    "decision": "QUALIFY",
+    "reason": "Series B SaaS with $25k/month budget, clear need for paid acquisition and landing page optimization services, and near-term implementation timeline.",
+    "confidence": 0.92
+  },
+  {
+    "lead_id": "L-002",
+    "decision": "REJECT",
+    "reason": "Student seeking mentorship and career advice, not a business with marketing budget or needs the agency serves.",
+    "confidence": 0.98
+  },
+  {
+    "lead_id": "L-003",
+    "decision": "ESCALATE",
+    "reason": "same address as L-001; merge with the earlier submission before routing, the two messages describe different asks.",
+    "confidence": 0.7
+  },
+  {
+    "lead_id": "L-004",
+    "decision": "ESCALATE",
+    "reason": "Cannot act on this row: no email address on the row.",
+    "confidence": 0.9
+  },
+  {
+    "lead_id": "L-005",
+    "decision": "NURTURE",
+    "reason": "Genuine business in a serviceable industry seeking lead generation, but budget is undefined and prospect is in early education phase rather than ready to commit.",
+    "confidence": 0.78
+  },
+  {
+    "lead_id": "L-006",
+    "decision": "ESCALATE",
+    "reason": "Message contains text written to manipulate the classifier, so the stated budget and authority cannot be taken at face value.",
+    "confidence": 0.93
+  },
+  {
+    "lead_id": "L-007",
+    "decision": "ESCALATE",
+    "reason": "The row contradicts itself and a person has to resolve it before this is routed: message describes enterprise scope but budget reads 50.",
+    "confidence": 0.6
+  },
+  {
+    "lead_id": "L-008",
+    "decision": "ESCALATE",
+    "reason": "Claims to be VP of Growth at Fortune 500 retailer with substantial budget but uses personal Gmail, won't name company, and pressure-sells with urgency—requires human verification of legitimacy.",
+    "confidence": 0.65
+  },
+  {
+    "lead_id": "L-009",
+    "decision": "QUALIFY",
+    "reason": "Established Mexican marketplace with $18k/month budget, approved trimester funding, and explicit need for SEO and bilingual content services that Single Grain provides.",
+    "confidence": 0.87
+  },
+  {
+    "lead_id": "L-010",
+    "decision": "REJECT",
+    "reason": "Placeholder values across name, company and message; this is a form test, not a lead.",
+    "confidence": 0.95
+  },
+  {
+    "lead_id": "L-011",
+    "decision": "ESCALATE",
+    "reason": "Lead claims to be an agency seeking retainer structure information for a client comparison, which could indicate they are a reseller, referral partner, or competitor rather than a direct prospect, requiring human verification of their actual business model and intent.",
+    "confidence": 0.6
+  },
+  {
+    "lead_id": "L-012",
+    "decision": "QUALIFY",
+    "reason": "FinLit is an established company with a legitimate website, appropriate monthly budget of $9,000, and a clear need for social media growth services that Single Grain provides.",
+    "confidence": 0.82
+  },
+  {
+    "lead_id": "L-013",
+    "decision": "ESCALATE",
+    "reason": "Cannot act on this row: mailinator.com is a throwaway domain.",
+    "confidence": 0.9
+  },
+  {
+    "lead_id": "L-014",
+    "decision": "NURTURE",
+    "reason": "Genuine early-stage startup with realistic budget constraints today but clear intent to scale marketing spend significantly within 6 months after funding.",
+    "confidence": 0.87
+  },
+  {
+    "lead_id": "L-015",
+    "decision": "ESCALATE",
+    "reason": "same address as L-002; merge with the earlier submission before routing, the two messages describe different asks.",
+    "confidence": 0.7
+  },
+  {
+    "lead_id": "L-016",
+    "decision": "QUALIFY",
+    "reason": "Established HVAC service business in Phoenix metro with $6,000/month budget seeking lead generation through digital marketing, which is a core service Single Grain provides.",
+    "confidence": 0.82
+  },
+  {
+    "lead_id": "L-017",
+    "decision": "QUALIFY",
+    "reason": "Healthcare staffing platform with $15k/month budget, established domain, referral source, and explicit need for demand generation with compliance expertise that Single Grain can provide.",
+    "confidence": 0.82
+  },
+  {
+    "lead_id": "L-018",
+    "decision": "ESCALATE",
+    "reason": "Lead has legitimate business signals (real company domain, substantial $22k/month budget) but empty message field prevents assessment of actual marketing need, timeline, or service fit.",
+    "confidence": 0.65
+  },
+  {
+    "lead_id": "L-019",
+    "decision": "ESCALATE",
+    "reason": "Data-rights request rather than a sales enquiry; must be handled by whoever owns privacy requests within the statutory window.",
+    "confidence": 0.97
+  },
+  {
+    "lead_id": "L-020",
+    "decision": "ESCALATE",
+    "reason": "Message contains a link to an executable under a billing pretext; routed to security, not sales.",
+    "confidence": 0.97
+  }
+]

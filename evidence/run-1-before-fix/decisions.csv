@@ -1,0 +1,21 @@
+lead_id,decision,reason,confidence
+L-001,QUALIFY,"Series B SaaS with $25k/month budget, clear need for paid acquisition and landing page optimization services, and near-term implementation timeline.",0.92
+L-002,REJECT,"Student seeking mentorship and career advice, not a business with marketing budget or needs the agency serves.",0.98
+L-003,ESCALATE,"same address as L-001; merge with the earlier submission before routing, the two messages describe different asks.",0.7
+L-004,ESCALATE,Cannot act on this row: no email address on the row.,0.9
+L-005,NURTURE,"Genuine business in a serviceable industry seeking lead generation, but budget is undefined and prospect is in early education phase rather than ready to commit.",0.78
+L-006,ESCALATE,"Message contains text written to manipulate the classifier, so the stated budget and authority cannot be taken at face value.",0.93
+L-007,NURTURE,"Legitimate enterprise prospect with significant scale and genuine need, but stated monthly budget of $50 is implausibly low for a global rebrand program and suggests either data entry error, budget misunderstanding, or early-stage exploration requiring clarification.",0.78
+L-008,ESCALATE,"Claims to be VP of Growth at Fortune 500 retailer with substantial budget but uses personal Gmail, won't name company, and pressure-sells with urgency—requires human verification of legitimacy.",0.65
+L-009,QUALIFY,"Established Mexican marketplace with $18k/month budget, approved trimester funding, and explicit need for SEO and bilingual content services that Single Grain provides.",0.87
+L-010,REJECT,"Placeholder values across name, company and message; this is a form test, not a lead.",0.95
+L-011,ESCALATE,"Lead claims to be an agency seeking retainer structure information for a client comparison, which could indicate they are a reseller, referral partner, or competitor rather than a direct prospect, requiring human verification of their actual business model and intent.",0.6
+L-012,QUALIFY,"FinLit is an established company with a legitimate website, appropriate monthly budget of $9,000, and a clear need for social media growth services that Single Grain provides.",0.82
+L-013,ESCALATE,Cannot act on this row: mailinator.com is a throwaway domain.,0.9
+L-014,NURTURE,Genuine early-stage startup with realistic budget constraints today but clear intent to scale marketing spend significantly within 6 months after funding.,0.87
+L-015,ESCALATE,"same address as L-002; merge with the earlier submission before routing, the two messages describe different asks.",0.7
+L-016,QUALIFY,"Established HVAC service business in Phoenix metro with $6,000/month budget seeking lead generation through digital marketing, which is a core service Single Grain provides.",0.82
+L-017,QUALIFY,"Healthcare staffing platform with $15k/month budget, established domain, referral source, and explicit need for demand generation with compliance expertise that Single Grain can provide.",0.82
+L-018,ESCALATE,"Lead has legitimate business signals (real company domain, substantial $22k/month budget) but empty message field prevents assessment of actual marketing need, timeline, or service fit.",0.65
+L-019,ESCALATE,Data-rights request rather than a sales enquiry; must be handled by whoever owns privacy requests within the statutory window.,0.97
+L-020,ESCALATE,"Message contains a link to an executable under a billing pretext; routed to security, not sales.",0.97
