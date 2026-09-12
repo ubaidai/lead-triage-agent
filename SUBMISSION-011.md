@@ -6,31 +6,27 @@
 **Test input:** the AI Automation Intern 012 fixture, `fixtures/inbound_leads.csv`
 **Fixture sha256:** `cc1927ca771c37b186a2abdb7b9757594da79ec6dda074e5a514dd2761cc8599`
 
-I also answered [AI Automation Intern 012](SUBMISSION.md) with the same build. Same repo,
-same run, that document goes deeper on the seeded traps.
+I also answered [AI Automation Intern 012](SUBMISSION.md) with the same build, same run.
+That document goes deeper on the seeded traps.
 
 ## Written answer
 
-This document is the written answer: the domain, the workflow I agentified, how the agent
-works, the three required test cases, a bad output and what changed because of it, a
-measured comparison against a manual pass, and the limits.
+This document is the written answer: the domain, the workflow, the agent, the three
+required test cases, a bad output and what changed, a measured comparison, and the limits.
 
 ## Operating artifact and artifact access
 
-Public repo, MIT, no runtime dependencies, Node 22+. Nothing needs credentials to inspect.
+`git clone https://github.com/ubaidai/lead-triage-agent` then `node src/run.mjs --offline`.
+Public, MIT, no runtime dependencies, Node 22+, no credentials needed to inspect.
 
 | Artifact | Path | How to check it |
 |---|---|---|
-| The prototype | `src/` | `node src/run.mjs --offline` runs with no API key |
-| Decisions, all 20 rows | `out/decisions.csv`, `out/decisions.json` | open it |
-| Output logs with prompt traces | `out/run-log.jsonl` | one JSON object per row |
-| Test inputs | `fixtures/inbound_leads.csv` | checksum above |
-| Failure notes, the bad output | `evidence/run-1-before-fix/` | diff against `out/` |
-| Manual pass and comparison | `evidence/manual_pass.csv`, `evidence/comparison.txt` | `node scripts/compare.mjs` |
+| Agent, decisions for all 20 rows, run log with prompt traces | `src/`, `out/` | `node src/run.mjs --offline` runs with no API key |
+| The bad output, before the fix | `evidence/run-1-before-fix/` | diff against `out/` |
+| Manual pass and comparison | `evidence/` | `node scripts/compare.mjs` |
 | Tests | `tests/check.mjs` | `node tests/check.mjs`, 31 passing [Observed] |
 
-A full run needs an `OPENROUTER_API_KEY` in `.env`. The offline path exercises every
-deterministic check without one, so a reviewer can run it in under a minute from a clone.
+A full run needs an `OPENROUTER_API_KEY` in `.env`.
 
 ---
 
@@ -61,10 +57,9 @@ whether they answered.
 
 The design turns on one thing. Agreeing with an authoritative voice on a phone is the
 ordinary human response, so a naive flow files that "yes" as a delivered warning and the
-employer ends up with a compliance record full of agreement that meant nothing. The agent
-never asks a question "yes" can answer. It asks what you are going to do and where you
-are going to sit, and it keeps the worker's own words as evidence beside every judgement.
-Built on the AssemblyAI Voice Agent API for their hackathon.
+employer holds a record full of agreement that meant nothing. The agent never asks a
+question "yes" can answer, and it keeps the worker's own words as evidence beside every
+judgement. Built on the AssemblyAI Voice Agent API.
 
 ---
 
@@ -231,7 +226,6 @@ the split that has held up.
 | Three test cases behave as described | 3 | `out/run-log.jsonl`, rows L-001, L-016, L-018 |
 | Injection row is not obeyed | 3 | `out/run-log.jsonl` L-006, `tests/check.mjs` |
 | Deterministic layer is repeatable | 3 | `node tests/check.mjs`, 31 passing |
-| Runs with no API key | 2 | `node src/run.mjs --offline` |
 | Bad output on L-007, then fixed | 4 | `evidence/run-1-before-fix/` vs `out/` |
 | 90% agreement with a manual pass | 4 | `evidence/manual_pass.csv`, `evidence/comparison.txt` |
 | heat-warning-agent is live and mine | 2 | heat-warning-agent.vercel.app, public repo |
@@ -240,10 +234,9 @@ Nothing here is Tier 5. Nobody but me has run it.
 
 ## Number source labels
 
-Every figure is labelled [Observed], [Estimated] or [Benchmarked] where it first appears.
-Row identifiers, confidences and decision counts come straight from `out/run-log.jsonl`
-and are [Observed]. The 10 to 15 minutes per lead and 30 to 50 leads per week are
-[Benchmarked] from your own Option B description, not measured by me.
+Every figure is labelled [Observed], [Estimated], [Benchmarked] or [Assumed] at first use.
+Row identifiers, decisions and confidence values read from `out/run-log.jsonl` and are
+[Observed] throughout unless marked otherwise.
 
 ## AI usage disclosure
 
@@ -256,15 +249,15 @@ document, and arguing through the policy design.
 **What I changed:** the split between contradiction and missing-information flags came
 out of reading my own failed run, not from the model. Qualifying `L-012` despite an
 impossible timestamp, and escalating the phishing row rather than rejecting it, are my
-calls and I argue for both above. The manual pass in `evidence/manual_pass.csv` is my own
-labelling, written before I read the agent's output.
+calls. The manual pass in `evidence/manual_pass.csv` is my own labelling, written before
+I read the agent's output.
 
 **What I checked myself:** all 20 rows against the agent's decisions, the fixture
 checksum, the test suite, and the ligature claim in Part 3. I found the `L-007` miss by
 reading the run log.
 
-**Time:** [Observed] about 2 hours 30 minutes across both challenge documents, against a
-1 to 2 hour estimate. The overrun is the manual comparison pass.
+**Time:** [Observed] about 2 hours 30 minutes across both documents, against a 1 to 2
+hour estimate. The overrun is the manual comparison pass.
 
 ## What breaks it
 
@@ -272,9 +265,9 @@ reading the run log.
    match this Tuesday's submission. [Observed: `seenEmail` is a `Map` that dies with the
    process.] First thing I would build.
 2. **No retry on the model call.** One HTTP failure escalates that row. Safe, but at
-   [Assumed] 50 leads a week a 1% failure rate is a needless escalation most fortnights.
+   [Assumed] 50 leads a week that is a needless escalation most fortnights.
 3. **Pattern lists rot.** Nine injection patterns and eight disposable domains are a
-   starting set an adversary routes around. These should be reviewed data, not constants.
+   starting set an adversary routes around. They should be data, not constants.
 4. **No enrichment.** The manual process looks up the company; the agent does not. Until
    it does, it is judging the form, not the business.
 5. **Thresholds are fitted to 20 rows.** Anything I concluded about confidence cutoffs is
@@ -283,10 +276,9 @@ reading the run log.
 ## What stays human
 
 - **Any row that contradicts itself.** `L-007` is why.
-- **Privacy and legal.** The GDPR erasure row carries a statutory clock. No automation
-  should answer it.
-- **Security.** The phishing row goes to whoever owns security, not to a sales queue.
+- **Privacy and legal.** The GDPR erasure row carries a statutory clock.
+- **Security.** The phishing row goes to security, not a sales queue.
 - **Manipulation attempts.** Flagged, and its claims are not scored.
 - **Duplicate merges.** Merging is destructive; a person should do it.
-- **Every REJECT, for the first month.** [Assumed] A wrong reject is invisible, and
-  sampling is the only way to learn whether the policy is too harsh.
+- **Every REJECT, for the first month.** [Assumed] A wrong reject is invisible, so
+  sampling is the only way to learn if the policy is too harsh.

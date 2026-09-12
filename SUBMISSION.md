@@ -17,27 +17,16 @@ Everything is in the repo above, public and MIT licensed, no dependencies, Node 
 
 | Artifact | Path | How to check it |
 |---|---|---|
-| The agent | `src/` | `node src/run.mjs --offline` runs with no API key |
-| Decisions file, all 20 rows | `out/decisions.csv`, `out/decisions.json` | open it |
-| Run log with prompt traces | `out/run-log.jsonl` | one JSON object per row |
+| Agent, decisions for all 20 rows, run log with prompt traces | `src/`, `out/` | `node src/run.mjs --offline` runs with no API key |
 | The bad output, before the fix | `evidence/run-1-before-fix/` | diff against `out/` |
-| Manual pass and comparison | `evidence/manual_pass.csv`, `evidence/comparison.txt` | `node scripts/compare.mjs` |
+| Manual pass and comparison | `evidence/` | `node scripts/compare.mjs` |
 | Tests | `tests/check.mjs` | `node tests/check.mjs`, 31 passing [Observed] |
-
-Nothing here needs credentials to inspect. A full run needs an `OPENROUTER_API_KEY` in
-`.env`; the offline path exercises every deterministic check without one.
 
 ## Number source labels
 
-Every figure below is labelled [Observed], [Estimated], [Benchmarked] or [Assumed] at the
-point it is first used. Row identifiers (L-001 and so on), confidence values and decision
-counts read straight out of `out/run-log.jsonl` and are [Observed] throughout unless
-marked otherwise.
-
----
-
-Run it yourself: `node src/run.mjs` (needs `OPENROUTER_API_KEY`), or `node src/run.mjs --offline`
-to exercise the deterministic layer with no API key at all.
+Every figure is labelled [Observed], [Estimated], [Benchmarked] or [Assumed] at first use.
+Row identifiers, decisions and confidence values read from `out/run-log.jsonl` and are
+[Observed] throughout unless marked otherwise.
 
 ---
 
@@ -50,31 +39,23 @@ Nothing is coerced into looking valid. `"we'll discuss"` in a budget column beco
 `null` with a reason attached, never `0`. `2026-13-45T99:99:00Z` is rejected rather than
 rolled forward into January 2027, which is what `Date.parse` does with it silently.
 
-**2. Deterministic validation.** Twenty checks producing flags, each with a severity.
-Missing contact details, disposable domains, malformed fields, duplicate addresses,
-executable links, privacy requests, text addressed to the classifier, enterprise scope
-against a trivial budget. These are structural facts about a row. A check finds them on
-every run; a language model finds them on most runs, and "most" is not a property you
-want in the layer that catches a phishing link.
+**2. Deterministic validation.** Twenty checks producing flags: missing contact details,
+disposable domains, duplicates, executable links, privacy requests, text addressed to the
+classifier, enterprise scope against a trivial budget. These are structural facts about a
+row. A check finds them every run; a model finds them most runs, and "most" is not a
+property you want in the layer catching a phishing link.
 
-**3. Judgment, only where judgment is needed.** Rows that clear structural validation go
-to a model with one narrow question: is this a fit worth a salesperson's time? Rows that
-do not clear it never reach the model at all.
-
-Then guardrails compare what the model concluded against what the row shows, and a
-policy turns that into one of QUALIFY, NURTURE, REJECT or ESCALATE.
+**3. Judgment, only where judgment is needed.** Rows that clear validation go to a model
+with one narrow question: is this a fit worth a salesperson's time? Rows that do not clear
+it never reach the model. Guardrails then compare what it concluded against what the row
+shows, and policy turns that into QUALIFY, NURTURE, REJECT or ESCALATE.
 
 ## Architecture
 
-| Component | What it does |
-|---|---|
-| `src/parse.mjs` | CSV reader, budget/timestamp/email/message normalisation |
-| `src/validate.mjs` | The twenty checks. Returns flags, decides nothing |
-| `src/decide.mjs` | Policy. Structural answers first, then guardrails on the model |
-| `src/llm.mjs` | OpenRouter, `anthropic/claude-haiku-4.5`, temperature 0 |
-| `src/run.mjs` | The loop. Writes `out/decisions.csv`, `.json`, `run-log.jsonl` |
-| `tests/check.mjs` | 31 tests on the deterministic layer [Observed] |
-| `scripts/compare.mjs` | Agent output against a manual pass |
+`parse.mjs` normalisation - `validate.mjs` the twenty checks, returns flags and decides
+nothing - `decide.mjs` policy - `llm.mjs` OpenRouter, `anthropic/claude-haiku-4.5`,
+temperature 0 - `run.mjs` the loop - `tests/check.mjs` 31 tests [Observed] -
+`scripts/compare.mjs` agreement analysis.
 
 No framework. Node with no runtime dependencies, so every line is inspectable and the
 whole thing runs from a clone. [Observed] 20 model calls, 1 per eligible row, about 40
@@ -134,14 +115,13 @@ Every row and call below is [Observed] from `out/run-log.jsonl`.
 Three worth explaining:
 
 **L-012 is qualified on purpose.** The impossible timestamp is an ingestion defect, not a
-signal about the lead. FinLit has a real product, a 9,000 budget and named channels.
-Escalating a good lead because a date field is broken punishes the prospect for our bug.
-The flag is recorded for whoever owns the form.
+signal about the lead. Escalating a good lead because a date field is broken punishes the
+prospect for our bug. The flag is recorded for whoever owns the form.
 
 **L-002 and L-015 share an email and are not the same lead.** One is a student asking for
-mentorship; the other describes a family restaurant group with four locations and budget.
-Deduplication keyed on anything cleverer than the address alone would have collapsed
-them and dropped the only real lead of the pair. Both are kept, the second escalates.
+mentorship; the other is a family restaurant group with budget. Deduplication keyed on
+anything cleverer than the address alone would have collapsed them and dropped the only
+real lead of the pair.
 
 **L-020 escalates rather than rejects.** Rejecting files a phishing attempt as a dead
 lead and nobody finds out. One person sees it once, and then it is a security ticket.
